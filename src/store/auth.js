@@ -37,10 +37,7 @@ export default {
             await dispatch('attempt', response.data.token)
         },
 
-        async attempt({
-            commit,
-            state
-        }, token) {
+        async attempt({commit,state}, token) {
             commit('SET_TOKEN', token)
 
             if (token) {

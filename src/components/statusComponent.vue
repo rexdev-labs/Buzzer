@@ -5,23 +5,26 @@
         <el-col :xs="5" :sm="4" :md="3" :lg="4" :xl="3">
           <div class="avaCircle" style="margin-left: 20px"><p>{{status.user.name[0].toUpperCase()}}</p></div>
         </el-col>
-        <el-col :xs="16" :sm="18" :md="19" :lg="18" :xl="19">
+        <el-col :xs="18" :sm="19" :md="19" :lg="18" :xl="19">
           <el-row>
             <h2 class="title">{{status.user.fullname}}</h2>
             <p class="grey">@{{status.user.name}}</p>
           </el-row>
-          <pre
+          <p
             style="
               float: left;
               text-align: left;
               font-family: Avenir, Helvetica, Arial, sans-serif;
               color: #8d8d8d;
+              overflow=auto;
+              max-width: 100%;
+
             "
           >{{status.status}} 
-              </pre
+              </p
           >
         </el-col>
-        <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2"
+        <el-col :xs="0" :sm="0" :md="2" :lg="2" :xl="2"
           ><div class="grid-content">
            <p class="grey" style="font-size: 12px;">{{moment(status.created_at).format('D-MMM-YYYY')}}</p>
           </div></el-col
