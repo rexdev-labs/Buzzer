@@ -31,8 +31,8 @@
   <div v-for="status in allstatus" v-bind:key="status">
     <div class="statusSection">
       <el-row>
-        <el-col :xs="5" :sm="4" :md="3" :lg="4" :xl="3">
-          <div class="avaCircle" style="margin-left: 20px">
+        <el-col :xs="5" :sm="2" :md="2" :lg="4" :xl="3">
+          <div class="avaCircle">
             <p>{{ status.user.name[0].toUpperCase() }}</p>
           </div>
         </el-col>
@@ -287,15 +287,30 @@ export default {
 .el-dialog{
   width: 90%!important;
 }
+.avaCircle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  border-radius: 50%;
+  height: 50px;
+  background-color: var(--blue);
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 20px;
+}
+.title{
+  font-size: 18px;
+}
 }
 @media only screen and (max-width: 420px) {
   .avaCircle {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
+    width: 50px;
     border-radius: 50%;
-    height: 40px;
+    height: 50px;
     background-color: var(--blue);
     font-weight: bold;
     color: #ffffff;

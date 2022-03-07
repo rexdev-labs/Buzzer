@@ -194,12 +194,31 @@ export default {
   padding: 10px 0;
   background-color: #f9fafc;
 }
+@media only screen and (max-width: 1000px) {
+  .imageLogo{
+    margin-left: -70px;
+    width: 50px;
+    margin-top: 5px;
+  }
+  .imageAva{
+    margin-right: -70px;
+    width: 50px;
+    margin-top: 5px;
+  }
+}
 @media only screen and (max-width: 600px) {
   .logos {
     width: 100px;
   }
   .imageLogo{
-    margin-left: -20px;
+    margin-left: -70px;
+    width: 50px;
+    margin-top: 5px;
+  }
+  .imageAva{
+    margin-right: -70px;
+    width: 50px;
+    margin-top: 5px;
   }
 }
 @media only screen and (max-width: 420px) {

@@ -175,15 +175,27 @@ export default {
   .logos {
     width: 100px;
   }
+  .avaCircle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    border-radius: 50%;
+    height: 50px;
+    background-color: var(--blue);
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 16px;
+  }
 }
 @media only screen and (max-width: 420px) {
   .avaCircle {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
+    width: 50px;
     border-radius: 50%;
-    height: 40px;
+    height: 50px;
     background-color: var(--blue);
     font-weight: bold;
     color: #ffffff;
