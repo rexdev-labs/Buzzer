@@ -51,8 +51,8 @@ export default {
   },
   methods: {
     async submit() {
-      await axios.post('http://127.0.0.1:8000/api/auth/addstatus', this.form)
-      const response = await axios.get('http://127.0.0.1:8000/api/auth/status')
+      await axios.post('https://buzzer.atelir.com/api/auth/addstatus', this.form)
+      const response = await axios.get('https://buzzer.atelir.com/api/auth/status')
       this.form.status = null
       this.$emit('status', response.data)
     },

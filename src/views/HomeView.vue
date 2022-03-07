@@ -198,6 +198,9 @@ export default {
   .logos {
     width: 100px;
   }
+  .imageLogo{
+    margin-left: -20px;
+  }
 }
 @media only screen and (max-width: 420px) {
   .avaCircle {
