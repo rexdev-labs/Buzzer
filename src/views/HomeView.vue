@@ -34,7 +34,7 @@
       <el-col :xs="24" :sm="24" :md="20" :lg="12" :xl="12" class="mainSection">
         <addStatusCard :id_user="user.id" @status="setStatus" />
         <br />
-        <statusCard :status=status />
+        <statusCard :status=status :id_user=user.id />
       </el-col>
     </el-row>
   </el-main>
@@ -117,7 +117,7 @@ export default {
 .mainSection {
   margin-top: 70px;
   z-index: 1;
-  background-color: #f9f9f9;
+  background-color: #FAFDFF;
   padding-bottom: 50px;
   border-radius: 40px;
 }
@@ -125,14 +125,6 @@ export default {
   margin-top: 2.5%;
   margin-left: 2.5%;
   margin-right: 2.5%;
-}
-.inputSection {
-  background-color: #f0f0f0;
-  padding: 20px;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
-  margin-top: 2.5%;
-  border-radius: 20px;
 }
 .flex-container {
   display: flex;

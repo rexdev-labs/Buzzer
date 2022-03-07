@@ -51,8 +51,8 @@ export default {
   },
   methods: {
     async submit() {
-      await axios.post('https://buzzer.atelir.com/api/auth/addstatus', this.form)
-      const response = await axios.get('https://buzzer.atelir.com/api/auth/status')
+      await axios.post('http://127.0.0.1:8000/api/auth/addstatus', this.form)
+      const response = await axios.get('http://127.0.0.1:8000/api/auth/status')
       this.form.status = null
       this.$emit('status', response.data)
     },
@@ -76,7 +76,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   border: none;
   font-size: 20px;
-  background-color: #f0f0f0;
+  background-color: #EEFBFF;
 }
 .textareaStatus:focus {
   outline: none;
@@ -95,20 +95,8 @@ export default {
   z-index: 2;
   background-color: white;
 }
-.mainSection {
-  margin-top: 70px;
-  z-index: 1;
-  background-color: #f9f9f9;
-  padding-bottom: 50px;
-  border-radius: 40px;
-}
-.statusSection {
-  margin-top: 2.5%;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
-}
 .inputSection {
-  background-color: #f0f0f0;
+  background-color: #EEFBFF;
   padding: 20px;
   margin-left: 2.5%;
   margin-right: 2.5%;

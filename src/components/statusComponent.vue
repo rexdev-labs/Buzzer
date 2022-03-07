@@ -1,14 +1,45 @@
 <template>
+    <el-dialog
+      v-model="dialogVisible"
+      title="Update Buzzer"
+      class="modal"
+      :before-close="handleClose"
+    >
+      <span>
+        <textarea
+        autofocus
+            v-model="form.editstatus"
+            rows="3"
+            cols="7"
+            maxlength="160"
+            placeholder="What's happening ?"
+            class="textareaStatus"
+          >
+          </textarea>
+      </span>
+      
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogUpdate()">Cancel</el-button>
+          <el-button type="primary" @click="updateStatus(idSelect)"
+            >Update Status</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
+
   <div v-for="status in allstatus" v-bind:key="status">
     <div class="statusSection">
       <el-row>
         <el-col :xs="5" :sm="4" :md="3" :lg="4" :xl="3">
-          <div class="avaCircle" style="margin-left: 20px"><p>{{status.user.name[0].toUpperCase()}}</p></div>
+          <div class="avaCircle" style="margin-left: 20px">
+            <p>{{ status.user.name[0].toUpperCase() }}</p>
+          </div>
         </el-col>
         <el-col :xs="18" :sm="19" :md="19" :lg="18" :xl="19">
           <el-row>
-            <h2 class="title">{{status.user.fullname}}</h2>
-            <p class="grey">@{{status.user.name}}</p>
+            <h2 class="title">{{ status.user.fullname }}</h2>
+            <p class="grey">@{{ status.user.name }}</p>
           </el-row>
           <p
             style="
@@ -20,15 +51,35 @@
               max-width: 100%;
 
             "
-          >{{status.status}} 
-              </p
           >
+            {{ status.status }}
+          </p>
         </el-col>
-        <el-col :xs="0" :sm="0" :md="2" :lg="2" :xl="2"
+        <el-col :xs="1" :sm="2" :md="2" :lg="2" :xl="2"
           ><div class="grid-content">
-           <p class="grey" style="font-size: 12px;">{{moment(status.created_at).format('D-MMM-YYYY')}}</p>
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                <p class="grey pointer">•••</p>
+              </span>
+              <template #dropdown v-if="id_user == status.id_user">
+                <el-dropdown-menu id="dropdown">
+                  <el-dropdown-item v-on:click="dialogUpdate(status.status, status.id)">Edit Post</el-dropdown-item>
+                  <el-dropdown-item v-on:click="greet(status.id)">Delete Post</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </div></el-col
         >
+      </el-row>
+      <el-row>
+        <el-col :xs="5" :sm="4" :md="3" :lg="4" :xl="3"> </el-col>
+        <el-col :xs="18" :sm="19" :md="19" :lg="18" :xl="19">
+          <el-row>
+            <p class="grey" style="font-size: 12px; color: #8d8d8d">
+              {{ moment(status.created_at).format("D-MMM-YYYY") }}
+            </p>
+          </el-row>
+        </el-col>
       </el-row>
       <hr style="border: 0.5px solid #f0f0f0" />
     </div>
@@ -36,56 +87,94 @@
 </template>
 <script>
 import axios from "axios";
-import moment from 'moment'
+import moment from "moment";
+// import { ref } from 'vue'
+
 export default {
-  name: "statusCard", 
+  name: "statusCard",
 
-    data(){
-        return{
-            allstatus: [],
-            moment: moment
-        }
-    },
+  data() {
+    return {
+      form: {
+        editstatus: String,
+      },
+      allstatus: [],
+      moment: moment,
+      dialogVisible: false,
+      idSelect: Number
+    };
+  },
 
-    props:{
-        status:String
-    },
+  props: {
+    status: String,
+    id_user: Number,
+  },
 
   async mounted() {
-      console.log(this.status)
+    console.log(this.status);
     if (this.status == null) {
-        let response = await axios.get("https://buzzer.atelir.com/api/auth/status");
-        this.allstatus = response.data
+      let response = await axios.get("https://buzzer.atelir.com/api/auth/status");
+      this.allstatus = response.data;
     }
   },
   watch: {
-      status: {
-          immediate: true,
-          handler(newData, oldData) {
-              if (newData != oldData) this.allstatus = newData
-          }
-      }
-  }
+    status: {
+      immediate: true,
+      handler(newData, oldData) {
+        if (newData != oldData) this.allstatus = newData;
+      },
+    },
+  },
+
+  methods: {
+    greet: async function (id) {
+      await axios.post("https://buzzer.atelir.com/api/auth/delete", { id });
+      const response = await axios.get("https://buzzer.atelir.com/api/auth/status");
+      this.allstatus = response.data;
+    },
+    dialogUpdate(statusSelect, idStatus) {
+      this.dialogVisible = !this.dialogVisible
+      this.form.editstatus = statusSelect
+      this.idSelect = idStatus
+    },
+    async updateStatus(id) {
+      await axios.post("https://buzzer.atelir.com/api/auth/edit", { id: id, status: this.form.editstatus });
+      const response = await axios.get("https://buzzer.atelir.com/api/auth/status");
+      this.allstatus = response.data;
+      this.dialogVisible = false;
+    },
+  },
 };
 </script>
 <style scoped>
+.modal {
+  width: 40%;
+}
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+
 .grey {
   color: #6d6d6d;
 }
 .textareaStatus {
+  padding: 20px;
   margin-top: 10px;
-  width: 100%;
+  width: 90%;
   resize: none;
   height: 100px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   border: none;
   font-size: 20px;
-  background-color: #f0f0f0;
+  background-color: #eefbff;
+  border-radius: 10px;
 }
 .textareaStatus:focus {
   outline: none;
 }
-
+.pointer:hover {
+  cursor: pointer;
+}
 .header {
   box-shadow: 1px 8px 13px -5px rgba(194, 194, 194, 0.75);
   -webkit-box-shadow: 1px 8px 13px -5px rgba(194, 194, 194, 0.75);
@@ -190,7 +279,14 @@ export default {
 @media only screen and (max-width: 600px) {
   .logos {
     width: 100px;
+    
   }
+  .modal {
+  width: 90%;
+}
+.el-dialog{
+  width: 90%!important;
+}
 }
 @media only screen and (max-width: 420px) {
   .avaCircle {
@@ -205,5 +301,11 @@ export default {
     color: #ffffff;
     font-size: 16px;
   }
+  .modal {
+  width: 90vw;
+}
+.el-dialog{
+  width: 90%!important;
+}
 }
 </style>
